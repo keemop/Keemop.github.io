@@ -37,7 +37,7 @@ I'm always learning new things. Check back for tutorials on:
 
 I started this website to share what I learn. If I can do it, so can you! 
 
-📧 **Contact:** [your-email@example.com] *(optional)*
+📧 **Contact:** [keemokazi158@gmail.com] *(optional)*
 
 ---
 

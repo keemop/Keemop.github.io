@@ -24,4 +24,5 @@ Ready to dual-boot your laptop? Check out my guide:
 
 ---
 
-*Built with ❤️ on GitHub Pages*
+*Built with ❤️ on GitHub Pages* 
+ 

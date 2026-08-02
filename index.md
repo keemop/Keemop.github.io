@@ -81,6 +81,7 @@ I'm **Keemop**, a 12-year-old who loves computers, coding, and tinkering with op
 
 ## 📚 My Tech Guides
 
+<!-- ===== CARD 1: DUAL-BOOT ===== -->
 <a href="/dual_booting" class="guide-card">
   <h3>🐧 Dual-Boot Windows 10 and Linux <span class="badge">✅ Ready</span></h3>
   <p>Step-by-step guide for installing Linux alongside Windows (or Windows alongside Linux!). Includes both POVs and how to fix GRUB when it breaks.</p>
@@ -88,6 +89,7 @@ I'm **Keemop**, a 12-year-old who loves computers, coding, and tinkering with op
   <span class="click-hint">👆 Click anywhere on this card to open</span>
 </a>
 
+<!-- ===== CARD 2: ARCH LINUX ===== -->
 <a href="/arch_install" class="guide-card">
   <h3>🛠️ Install Arch Linux (The Hard Way) <span class="badge badge-soon">⏳ Coming Soon</span></h3>
   <p>Learn how to install Arch Linux from scratch—no automated scripts, just pure terminal and patience.</p>
@@ -95,6 +97,7 @@ I'm **Keemop**, a 12-year-old who loves computers, coding, and tinkering with op
   <span class="click-hint">👆 Click anywhere on this card to open</span>
 </a>
 
+<!-- ===== CARD 3: FIX GRUB ===== -->
 <a href="/fix_grub" class="guide-card">
   <h3>🔧 Fix GRUB Bootloader <span class="badge badge-soon">⏳ Coming Soon</span></h3>
   <p>What to do when Windows overwrites GRUB and you can't boot into Linux. Live USB rescue method explained.</p>

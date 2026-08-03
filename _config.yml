@@ -6,3 +6,6 @@ plugins:
 title: Keemop
 description: Expand Your Kn0l4dge
 google_site_verification: NG_gK1HquKYAxEr-QJ5pbS0JwYVoUOENFkBaZtcqFcQ
+
+
+include: [_includes]

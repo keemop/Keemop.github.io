@@ -98,3 +98,142 @@ h1, h2, h3 {
 .guide-card {
     animation: fadeIn 0.6s ease-out both;
 }
+
+/* === SPACIOUS MODERN LAYOUT === */
+
+/* More breathing room around everything */
+body {
+    padding: 40px 30px !important;
+    max-width: 1100px !important;
+    margin: 0 auto !important;
+    line-height: 1.8 !important;
+}
+
+/* Bigger headings with more space */
+h1 {
+    font-size: 3em !important;
+    margin: 40px 0 20px 0 !important;
+}
+
+h2 {
+    font-size: 2em !important;
+    margin: 35px 0 15px 0 !important;
+}
+
+h3 {
+    font-size: 1.5em !important;
+    margin: 25px 0 10px 0 !important;
+}
+
+p {
+    font-size: 1.1em !important;
+    margin: 15px 0 !important;
+}
+
+/* Bigger, roomier cards */
+.guide-card {
+    padding: 30px 35px !important;
+    margin: 25px 0 !important;
+    border-radius: 16px !important;
+    border-width: 2px !important;
+}
+
+.guide-card h3 {
+    font-size: 1.6em !important;
+    margin: 0 0 10px 0 !important;
+}
+
+.guide-card p {
+    font-size: 1.05em !important;
+    margin: 8px 0 !important;
+    line-height: 1.7 !important;
+}
+
+.guide-card .arrow {
+    font-size: 1.1em !important;
+}
+
+/* Spacious lists */
+ul, ol {
+    margin: 15px 0 !important;
+    padding-left: 30px !important;
+}
+
+li {
+    margin: 8px 0 !important;
+    font-size: 1.05em !important;
+}
+
+/* Bigger code blocks with padding */
+pre, code {
+    font-size: 1em !important;
+    padding: 15px 20px !important;
+    border-radius: 10px !important;
+}
+
+/* Spacious footer */
+footer, .footer {
+    padding: 30px 0 !important;
+    margin-top: 50px !important;
+    font-size: 1em !important;
+}
+
+/* More space between sections */
+hr {
+    margin: 40px 0 !important;
+    border-width: 2px !important;
+}
+
+/* Bigger badges */
+.badge {
+    font-size: 0.8em !important;
+    padding: 4px 14px !important;
+    border-radius: 25px !important;
+}
+
+/* Spacious buttons */
+.btn, button, .button {
+    padding: 14px 30px !important;
+    font-size: 1.1em !important;
+    border-radius: 10px !important;
+}
+
+/* More space for images */
+img {
+    margin: 20px 0 !important;
+    border-radius: 12px !important;
+}
+
+/* Feedback form spacing */
+form {
+    padding: 30px !important;
+}
+
+form input, form textarea {
+    padding: 14px !important;
+    font-size: 1em !important;
+    border-radius: 8px !important;
+}
+
+form label {
+    font-size: 1em !important;
+    margin-bottom: 8px !important;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 20px 15px !important;
+    }
+    
+    h1 {
+        font-size: 2.2em !important;
+    }
+    
+    h2 {
+        font-size: 1.6em !important;
+    }
+    
+    .guide-card {
+        padding: 20px !important;
+    }
+}

@@ -114,15 +114,26 @@ I started this website to share what I learn. If I can do it, so can you!
 ---
 
 *Built with ❤️ on GitHub Pages*
-
 <!-- ============================================ -->
 <!-- EASTER EGG - Hidden Button -->
 <!-- ============================================ -->
 
-<div style="text-align:center;margin-top:30px;opacity:0.15;transition:opacity 0.3s ease;">
-    <a href="/easteregg/" style="color:#444;text-decoration:none;font-size:12px;font-family:'Courier New',monospace;" 
-       onmouseover="this.style.color='#00ff41';this.parentElement.style.opacity='1';" 
-       onmouseout="this.style.color='#444';this.parentElement.style.opacity='0.15';">
-        🐧 🐧 🐧
+<div style="text-align:center;margin:50px 0 30px 0;padding:20px;border-radius:16px;background:rgba(0,255,65,0.03);border:1px solid rgba(0,255,65,0.1);transition:all 0.5s ease;"
+     onmouseover="this.style.background='rgba(0,255,65,0.08)';this.style.borderColor='#00ff41';this.style.boxShadow='0 0 40px rgba(0,255,65,0.1)';"
+     onmouseout="this.style.background='rgba(0,255,65,0.03)';this.style.borderColor='rgba(0,255,65,0.1)';this.style.boxShadow='none';">
+    
+    <!-- Hover hint text -->
+    <div style="font-size:14px;color:#555;margin-bottom:12px;font-family:'Courier New',monospace;letter-spacing:3px;transition:all 0.3s ease;"
+         onmouseover="this.style.color='#00ff41';this.style.fontSize='18px';this.textContent='🎮 CLICK HERE TO PLAY FLAPPY TUX! 🐧';" 
+         onmouseout="this.style.color='#555';this.style.fontSize='14px';this.textContent='🐧 hover for secret 🐧';">
+        🐧 hover for secret 🐧
+    </div>
+    
+    <!-- Big button -->
+    <a href="/easteregg/" 
+       style="display:inline-block;padding:16px 45px;background:transparent;color:#00ff41;text-decoration:none;border:3px solid #00ff41;border-radius:12px;font-family:'Courier New',monospace;font-size:20px;font-weight:bold;transition:all 0.3s ease;opacity:0.4;text-transform:uppercase;letter-spacing:2px;"
+       onmouseover="this.style.background='#00ff41';this.style.color='#0a0a0a';this.style.opacity='1';this.style.boxShadow='0 0 60px rgba(0,255,65,0.5)';this.style.transform='scale(1.08)';" 
+       onmouseout="this.style.background='transparent';this.style.color='#00ff41';this.style.opacity='0.4';this.style.boxShadow='none';this.style.transform='scale(1)';">
+        🐧 PLAY FLAPPY TUX 🐧
     </a>
 </div>

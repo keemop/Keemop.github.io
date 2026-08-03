@@ -1,0 +1,45 @@
+<!-- ============================================ -->
+<!-- MATRIX RAIN BACKGROUND - Remove this block to delete -->
+<!-- ============================================ -->
+
+<style>
+    /* Canvas background */
+    #matrix-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        opacity: 0.25;
+        pointer-events: none;
+    }
+
+    /* Make sure content is above the background */
+    body {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Dark overlay to make text readable */
+    #matrix-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(10, 10, 10, 0.3);
+        z-index: 0;
+        pointer-events: none;
+    }
+</style>
+
+<!-- Dark overlay behind content -->
+<div id="matrix-overlay"></div>
+
+<!-- Matrix JavaScript -->
+<script src="/assets/js/matrix.js"></script>
+
+<!-- ============================================ -->
+<!-- END MATRIX BACKGROUND -->
+<!-- ============================================ -->

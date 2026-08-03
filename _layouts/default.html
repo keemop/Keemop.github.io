@@ -5,17 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
     
-    <!-- Include Open Graph tags -->
+    <!-- ============================================ -->
+    <!-- OPEN GRAPH TAGS (SEO & Social Sharing)        -->
+    <!-- ============================================ -->
     {% include head.html %}
     
-    <!-- Theme CSS -->
+    <!-- ============================================ -->
+    <!-- THEME CSS                                     -->
+    <!-- ============================================ -->
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 <body>
-    <!-- === MATRIX BACKGROUND === -->
-    {% include matrix-bg.html %}
-    <!-- === END MATRIX BACKGROUND === -->
 
+    <!-- ============================================ -->
+    <!-- MATRIX BACKGROUND                             -->
+    <!-- ============================================ -->
+    {% include matrix-bg.html %}
+
+    <!-- ============================================ -->
+    <!-- PAGE CONTENT                                  -->
+    <!-- ============================================ -->
     {{ content }}
+
+    <!-- ============================================ -->
+    <!-- HACKER SOUND EFFECTS                          -->
+    <!-- ============================================ -->
+    
+    <!-- Audio files (preload for faster response) -->
+    <audio id="clickSound" preload="auto">
+        <source src="https://www.soundjay.com/computer/computer-keyboard-typing-01.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="enterSound" preload="auto">
+        <source src="https://www.soundjay.com/computer/computer-keyboard-return-01.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="hackerAmbient" loop preload="auto">
+        <source src="https://www.soundjay.com/computer/computer-ambient-01.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating sound control button -->
+    <div style="position:fixed;bottom:80px;right:20px;z-index:999;">
+        <button id="soundToggle" 
+                style="background:#0a0a0a;color:#00ff41;border:2px solid #00ff41;border-radius:50%;width:55px;height:55px;font-size:24px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 0 20px rgba(0,255,65,0.1);"
+                onmouseover="this.style.background='#00ff41';this.style.color='#0a0a0a';this.style.boxShadow='0 0 40px rgba(0,255,65,0.3)';" 
+                onmouseout="this.style.background='#0a0a0a';this.style.color='#00ff41';this.style.boxShadow='0 0 20px rgba(0,255,65,0.1)';">
+            🔊
+        </button>
+    </div>
+
+    <script>
+        // ============================================
+        // HACKER SOUND EFFECTS - JavaScript
+        // ============================================
+
+        // Get audio elements
+        const clickSound = document.getElementById('clickSound');
+        const enterSound = document.getElementById('enterSound');
+        const ambient = document.getElementById('hackerAmbient');
+        const soundToggle = document.getElementById('soundToggle');
+        
+        // State variables
+        let soundEnabled = true;
+        let ambientOn = false;
+        
+        // Set ambient volume (subtle background)
+        ambient.volume = 0.1;
+
+        // Play click sound on any click
+        document.addEventListener('click', function(e) {
+            if (!soundEnabled) return;
+            
+            // If clicking a button or link, play "enter" sound
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') {
+                enterSound.currentTime = 0;
+                enterSound.play().catch(() => {});
+                return;
+            }
+            
+            // Otherwise play typing sound
+            clickSound.currentTime = 0;
+            clickSound.play().catch(() => {});
+        });
+
+        // Start ambient sound on first user click (bypasses autoplay policy)
+        document.addEventListener('click', function initAmbient() {
+            if (!ambientOn && soundEnabled) {
+                ambient.play().catch(() => {});
+                ambientOn = true;
+            }
+        }, { once: true });
+
+        // ============================================
+        // TOGGLE FUNCTION (One button to rule them all!)
+        // ============================================
+
+        soundToggle.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent the click from triggering the sound
+            
+            soundEnabled = !soundEnabled;
+            
+            if (soundEnabled) {
+                // Turn sounds ON
+                soundToggle.textContent = '🔊';
+                soundToggle.style.color = '#00ff41';
+                soundToggle.style.borderColor = '#00ff41';
+                // Resume ambient if it was on
+                if (ambientOn) {
+                    ambient.play().catch(() => {});
+                }
+            } else {
+                // Turn sounds OFF
+                soundToggle.textContent = '🔇';
+                soundToggle.style.color = '#ff4444';
+                soundToggle.style.borderColor = '#ff4444';
+                // Pause ambient
+                ambient.pause();
+            }
+        });
+
+        // Optional: Log that sounds are ready
+        console.log('🔊 Hacker Sound Effects Loaded!');
+        console.log('💡 Click anywhere to hear keyboard sounds.');
+        console.log('💡 Click the 🔊 button to toggle all sounds on/off.');
+    </script>
+
 </body>
 </html>

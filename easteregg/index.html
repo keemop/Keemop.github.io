@@ -18,7 +18,14 @@
             height: 100vh;
             font-family: 'Courier New', monospace;
             overflow: hidden;
+            transition: background 0.3s ease;
         }
+
+        /* Light theme for body */
+        body.light-theme {
+            background: #f0f0f0 !important;
+        }
+
         #gameContainer {
             position: relative;
             width: 400px;
@@ -28,7 +35,15 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 0 60px rgba(0, 255, 65, 0.1);
+            transition: all 0.3s ease;
         }
+
+        body.light-theme #gameContainer {
+            background: linear-gradient(180deg, #e8f0e8 0%, #d0dcd0 100%);
+            border-color: #0066cc;
+            box-shadow: 0 0 60px rgba(0, 102, 204, 0.1);
+        }
+
         #gameCanvas {
             display: block;
             width: 100%;
@@ -45,7 +60,14 @@
             text-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
             pointer-events: none;
             z-index: 10;
+            transition: color 0.3s ease;
         }
+
+        body.light-theme #score {
+            color: #0066cc;
+            text-shadow: 0 0 20px rgba(0, 102, 204, 0.3);
+        }
+
         #startScreen {
             position: absolute;
             top: 0;
@@ -60,18 +82,36 @@
             pointer-events: all;
             cursor: pointer;
             z-index: 20;
+            transition: background 0.3s ease;
         }
+
+        body.light-theme #startScreen {
+            background: rgba(240, 240, 240, 0.9);
+        }
+
         #startScreen h1 {
             color: #00ff41;
             font-size: 38px;
             text-shadow: 0 0 40px rgba(0, 255, 65, 0.3);
             margin-bottom: 10px;
+            transition: color 0.3s ease;
         }
+
+        body.light-theme #startScreen h1 {
+            color: #0066cc;
+            text-shadow: 0 0 40px rgba(0, 102, 204, 0.3);
+        }
+
         #startScreen p {
             color: #808080;
             font-size: 16px;
             margin: 5px 0;
         }
+
+        body.light-theme #startScreen p {
+            color: #555;
+        }
+
         #startScreen .key {
             color: #00ff41;
             border: 1px solid #00ff41;
@@ -79,7 +119,14 @@
             border-radius: 6px;
             font-size: 14px;
             margin: 10px 0;
+            transition: all 0.3s ease;
         }
+
+        body.light-theme #startScreen .key {
+            color: #0066cc;
+            border-color: #0066cc;
+        }
+
         #gameOver {
             position: absolute;
             top: 0;
@@ -94,24 +141,45 @@
             pointer-events: all;
             cursor: pointer;
             z-index: 20;
+            transition: background 0.3s ease;
         }
+
+        body.light-theme #gameOver {
+            background: rgba(240, 240, 240, 0.95);
+        }
+
         #gameOver h1 {
             color: #ff4444;
             font-size: 34px;
             text-shadow: 0 0 40px rgba(255, 68, 68, 0.3);
             margin-bottom: 5px;
         }
+
+        body.light-theme #gameOver h1 {
+            color: #cc0000;
+        }
+
         #gameOver .final-score {
             color: #00ff41;
             font-size: 24px;
             margin: 10px 0;
+            transition: color 0.3s ease;
         }
+
+        body.light-theme #gameOver .final-score {
+            color: #0066cc;
+        }
+
         #gameOver p {
             color: #808080;
             font-size: 14px;
             margin-top: 10px;
         }
-        /* ⭐ FIXED: Back button - completely separate from game */
+
+        body.light-theme #gameOver p {
+            color: #555;
+        }
+
         .back-link {
             position: absolute;
             bottom: 15px;
@@ -121,13 +189,11 @@
             font-size: 13px;
             text-decoration: none;
             z-index: 30;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             background: rgba(10, 10, 10, 0.7);
             padding: 8px 20px;
             border-radius: 20px;
             border: 1px solid #222;
-            pointer-events: all !important;
-            cursor: pointer !important;
             font-family: 'Courier New', monospace;
         }
         .back-link:hover {
@@ -135,6 +201,60 @@
             border-color: #00ff41;
             background: rgba(0, 255, 65, 0.1);
         }
+
+        body.light-theme .back-link {
+            background: rgba(240, 240, 240, 0.8);
+            border-color: #ccc;
+            color: #666;
+        }
+
+        body.light-theme .back-link:hover {
+            color: #0066cc;
+            border-color: #0066cc;
+            background: rgba(0, 102, 204, 0.1);
+        }
+
+        /* Theme toggle button inside game */
+        #themeToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 2px solid #00ff41;
+            background: #0a0a0a;
+            color: #00ff41;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #themeToggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.3);
+            background: #00ff41;
+            color: #0a0a0a;
+        }
+
+        body.light-theme #themeToggle {
+            border-color: #0066cc;
+            background: #ffffff;
+            color: #0066cc;
+            box-shadow: 0 0 20px rgba(0, 102, 204, 0.1);
+        }
+
+        body.light-theme #themeToggle:hover {
+            background: #0066cc;
+            color: #ffffff;
+            box-shadow: 0 0 40px rgba(0, 102, 204, 0.3);
+        }
+
         @media (max-width: 500px) {
             #gameContainer {
                 width: 95vw;
@@ -150,10 +270,8 @@
 <div id="gameContainer">
     <canvas id="gameCanvas" width="400" height="600"></canvas>
 
-    <!-- Score -->
     <div id="score">0</div>
 
-    <!-- Start Screen -->
     <div id="startScreen">
         <h1>🐧 FLAPPY TUX</h1>
         <p>⬆️ Space / Click / Tap to fly</p>
@@ -161,20 +279,61 @@
         <p style="margin-top:20px;color:#444;font-size:12px;">Click or press Space to start</p>
     </div>
 
-    <!-- Game Over -->
     <div id="gameOver">
         <h1>💀 GAME OVER</h1>
         <div class="final-score">Score: <span id="finalScore">0</span></div>
         <p style="color:#00ff41;">Click or press Space to restart</p>
     </div>
 
-    <!-- ⭐ FIXED: Back button - separate element, no game interference -->
-    <a href="/" class="back-link" id="backButton">⬅️ Back to site</a>
+    <a href="/" class="back-link">⬅️ Back to site</a>
 </div>
+
+<!-- Theme Switcher Button -->
+<button id="themeToggle" onclick="toggleGameTheme()">☀️</button>
 
 <script>
     // ============================================
-    // FLAPPY TUX - Easter Egg Game
+    // THEME SWITCHER FOR GAME
+    // ============================================
+
+    function toggleGameTheme() {
+        const body = document.body;
+        const button = document.getElementById('themeToggle');
+
+        body.classList.toggle('light-theme');
+
+        if (body.classList.contains('light-theme')) {
+            button.textContent = '🌙';
+            button.style.borderColor = '#0066cc';
+            button.style.color = '#0066cc';
+            localStorage.setItem('gameTheme', 'light');
+        } else {
+            button.textContent = '☀️';
+            button.style.borderColor = '#00ff41';
+            button.style.color = '#00ff41';
+            localStorage.setItem('gameTheme', 'dark');
+        }
+    }
+
+    function loadGameTheme() {
+        const savedTheme = localStorage.getItem('gameTheme');
+        const body = document.body;
+        const button = document.getElementById('themeToggle');
+
+        if (savedTheme === 'light') {
+            body.classList.add('light-theme');
+            button.textContent = '🌙';
+            button.style.borderColor = '#0066cc';
+            button.style.color = '#0066cc';
+        } else {
+            button.textContent = '☀️';
+            button.style.borderColor = '#00ff41';
+            button.style.color = '#00ff41';
+        }
+    }
+
+    // ============================================
+    // FLAPPY TUX GAME
     // ============================================
 
     const canvas = document.getElementById('gameCanvas');
@@ -184,12 +343,6 @@
     const startScreen = document.getElementById('startScreen');
     const gameOverScreen = document.getElementById('gameOver');
 
-    // ⭐ Prevent back button from triggering game
-    document.getElementById('backButton').addEventListener('click', function(e) {
-        e.stopPropagation();
-    });
-
-    // Game constants
     const GRAVITY = 0.45;
     const JUMP_FORCE = -8;
     const PIPE_WIDTH = 60;
@@ -197,7 +350,6 @@
     const PIPE_SPEED = 2.5;
     const PIPE_INTERVAL = 90;
 
-    // Game state
     let bird = { x: 60, y: 300, width: 32, height: 32, velocity: 0 };
     let pipes = [];
     let score = 0;
@@ -205,7 +357,6 @@
     let gameStarted = false;
     let frameCount = 0;
 
-    // Draw Tux
     function drawTux(x, y, size) {
         const s = size / 2;
         ctx.fillStyle = '#1a1a1a';
@@ -427,7 +578,6 @@
         }
     });
 
-    // ⭐ FIXED: Canvas clicks only (not the back button)
     canvas.addEventListener('click', function(e) {
         e.stopPropagation();
         handleJump(e);
@@ -439,7 +589,6 @@
         handleJump(e);
     });
 
-    // Start screens click
     startScreen.addEventListener('click', function(e) {
         e.stopPropagation();
         handleJump(e);
@@ -450,11 +599,14 @@
         handleJump(e);
     });
 
-    // ⭐ Prevent clicks on back button from triggering game
-    document.getElementById('backButton').addEventListener('click', function(e) {
+    document.querySelector('.back-link').addEventListener('click', function(e) {
         e.stopPropagation();
-        // Let the link work normally
+    });
 
+    // Load saved theme
+    loadGameTheme();
+    resetGame();
+    gameLoop();
 </script>
 
 </body>

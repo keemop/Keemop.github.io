@@ -160,3 +160,8 @@ I started this website to share what I learn. If I can do it, so can you!
         🐧 PLAY FLAPPY TUX 🐧
     </a>
 </div>
+<div style="text-align:center;margin:20px 0;">
+    <a href="/now" style="display:inline-block;padding:12px 30px;background:transparent;color:#00ff41;border:2px solid #00ff41;border-radius:8px;font-weight:bold;font-size:16px;text-decoration:none;font-family:'Courier New',monospace;transition:all 0.3s ease;">
+        📌 What I'm Working On Now
+    </a>
+</div>

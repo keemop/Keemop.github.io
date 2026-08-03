@@ -114,3 +114,15 @@ I started this website to share what I learn. If I can do it, so can you!
 ---
 
 *Built with ❤️ on GitHub Pages*
+
+<!-- ============================================ -->
+<!-- EASTER EGG - Hidden Button -->
+<!-- ============================================ -->
+
+<div style="text-align:center;margin-top:30px;opacity:0.15;transition:opacity 0.3s ease;">
+    <a href="/easteregg/" style="color:#444;text-decoration:none;font-size:12px;font-family:'Courier New',monospace;" 
+       onmouseover="this.style.color='#00ff41';this.parentElement.style.opacity='1';" 
+       onmouseout="this.style.color='#444';this.parentElement.style.opacity='0.15';">
+        🐧 🐧 🐧
+    </a>
+</div>

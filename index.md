@@ -75,9 +75,28 @@ layout: default
 
 # 👋 Welcome to My Tech Lab!
 
-<p style="text-align:right;font-size:1.2em;">
-    <a href="/search" style="color:#00ff41;text-decoration:none;">🔍</a>
-</p>
+<!-- ============================================ -->
+<!-- FULL-WIDTH SEARCH BAR -->
+<!-- ============================================ -->
+
+<div style="width:100%;margin:15px 0;padding:0;">
+    <a href="/search" style="display:block;width:100%;text-decoration:none;">
+        <div style="width:100%;padding:16px 22px;background:#0a0a0a;border:2px solid #00ff41;border-radius:10px;box-sizing:border-box;display:flex;align-items:center;gap:15px;transition:all 0.3s ease;cursor:pointer;"
+             onmouseover="this.style.background='rgba(0,255,65,0.05)';this.style.borderColor='#ffffff';this.style.boxShadow='0 0 40px rgba(0,255,65,0.15)';"
+             onmouseout="this.style.background='#0a0a0a';this.style.borderColor='#00ff41';this.style.boxShadow='none';">
+            
+            <span style="color:#00ff41;font-size:22px;font-family:'Courier New',monospace;">🔍</span>
+            <span style="color:#555;font-size:17px;font-family:'Courier New',monospace;flex:1;transition:color 0.3s ease;"
+                  onmouseover="this.style.color='#00ff41';"
+                  onmouseout="this.style.color='#555';">
+                Search all guides...
+            </span>
+            <span style="color:#333;font-size:11px;font-family:'Courier New',monospace;border:1px solid #222;padding:2px 12px;border-radius:4px;">
+                Click to search
+            </span>
+        </div>
+    </a>
+</div>
 
 I'm **Keemop**, a 12-year-old who loves computers, coding, and tinkering with operating systems. This is my collection of guides to help other beginners!
 

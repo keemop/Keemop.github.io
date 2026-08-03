@@ -31,15 +31,15 @@
     <!-- HACKER SOUND EFFECTS                          -->
     <!-- ============================================ -->
     
-    <!-- Audio files (preload for faster response) -->
+    <!-- Audio files (external URLs) -->
     <audio id="clickSound" preload="auto">
-        <source src="https://www.soundjay.com/computer/computer-keyboard-typing-01.mp3" type="audio/mpeg">
+        <source src="https://www.soundjay.com/button/sounds/button-09a.mp3" type="audio/mpeg">
     </audio>
     <audio id="enterSound" preload="auto">
-        <source src="https://www.soundjay.com/computer/computer-keyboard-return-01.mp3" type="audio/mpeg">
+        <source src="https://www.soundjay.com/button/sounds/button-10.mp3" type="audio/mpeg">
     </audio>
     <audio id="hackerAmbient" loop preload="auto">
-        <source src="https://www.soundjay.com/computer/computer-ambient-01.mp3" type="audio/mpeg">
+        <source src="https://www.soundjay.com/mechanical/mechanical-keyboard-01.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Floating sound control button -->
@@ -68,14 +68,14 @@
         let ambientOn = false;
         
         // Set ambient volume (subtle background)
-        ambient.volume = 0.1;
+        ambient.volume = 0.15;
 
         // Play click sound on any click
         document.addEventListener('click', function(e) {
             if (!soundEnabled) return;
             
             // If clicking a button or link, play "enter" sound
-            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') {
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A' || e.target.closest('button') || e.target.closest('a')) {
                 enterSound.currentTime = 0;
                 enterSound.play().catch(() => {});
                 return;
@@ -122,7 +122,6 @@
             }
         });
 
-        // Optional: Log that sounds are ready
         console.log('🔊 Hacker Sound Effects Loaded!');
         console.log('💡 Click anywhere to hear keyboard sounds.');
         console.log('💡 Click the 🔊 button to toggle all sounds on/off.');

@@ -75,6 +75,10 @@ layout: default
 
 # 👋 Welcome to My Tech Lab!
 
+<p style="text-align:right;font-size:1.2em;">
+    <a href="/search" style="color:#00ff41;text-decoration:none;">🔍</a>
+</p>
+
 I'm **Keemop**, a 12-year-old who loves computers, coding, and tinkering with operating systems. This is my collection of guides to help other beginners!
 
 ---

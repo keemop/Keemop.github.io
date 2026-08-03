@@ -5,27 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
     
-    <!-- ============================================ -->
-    <!-- OPEN GRAPH TAGS (SEO & Social Sharing)        -->
-    <!-- ============================================ -->
     {% include head.html %}
-    
-    <!-- ============================================ -->
-    <!-- THEME CSS                                     -->
-    <!-- ============================================ -->
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 <body>
 
-    <!-- ============================================ -->
-    <!-- MATRIX BACKGROUND                             -->
-    <!-- ============================================ -->
+    <!-- MATRIX BACKGROUND -->
     {% include matrix-bg.html %}
 
-    <!-- ============================================ -->
-    <!-- PAGE CONTENT                                  -->
-    <!-- ============================================ -->
+    <!-- PAGE CONTENT -->
     {{ content }}
+
+    <!-- THEME SWITCHER -->
+    {% include theme-switcher.html %}
 
 </body>
 </html>

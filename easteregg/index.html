@@ -3,611 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐧 Flappy Tux - Easter Egg</title>
+    <title>🎮 Easter Egg - Keemop's Tech Lab</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             background: #0a0a0a;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             font-family: 'Courier New', monospace;
-            overflow: hidden;
-            transition: background 0.3s ease;
+            padding: 20px;
         }
 
-        /* Light theme for body */
-        body.light-theme {
-            background: #f0f0f0 !important;
-        }
-
-        #gameContainer {
-            position: relative;
-            width: 400px;
-            height: 600px;
-            background: linear-gradient(180deg, #0a0a0a 0%, #1a2a1a 100%);
-            border: 2px solid #00ff41;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 0 60px rgba(0, 255, 65, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        body.light-theme #gameContainer {
-            background: linear-gradient(180deg, #e8f0e8 0%, #d0dcd0 100%);
-            border-color: #0066cc;
-            box-shadow: 0 0 60px rgba(0, 102, 204, 0.1);
-        }
-
-        #gameCanvas {
-            display: block;
+        .container {
+            max-width: 700px;
             width: 100%;
-            height: 100%;
-            cursor: pointer;
+            text-align: center;
         }
-        #score {
-            position: absolute;
-            top: 20px;
-            right: 30px;
+
+        .header h1 {
             color: #00ff41;
-            font-size: 28px;
-            font-weight: bold;
-            text-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
-            pointer-events: none;
-            z-index: 10;
-            transition: color 0.3s ease;
+            font-size: 2.5em;
+            text-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
+            margin-bottom: 8px;
         }
 
-        body.light-theme #score {
-            color: #0066cc;
-            text-shadow: 0 0 20px rgba(0, 102, 204, 0.3);
+        .header p {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.9em;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
         }
 
-        #startScreen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .game-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            background: rgba(10, 10, 10, 0.85);
-            pointer-events: all;
-            cursor: pointer;
-            z-index: 20;
-            transition: background 0.3s ease;
+            gap: 10px;
         }
 
-        body.light-theme #startScreen {
-            background: rgba(240, 240, 240, 0.9);
+        .game-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 255, 65, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.04);
         }
 
-        #startScreen h1 {
+        .game-card .icon {
+            font-size: 3.5em;
+            line-height: 1;
+        }
+
+        .game-card h3 {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .game-card p {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.75em;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .game-card .badge {
+            display: inline-block;
+            font-size: 0.5em;
+            padding: 2px 12px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .badge-ready {
+            background: rgba(0, 255, 65, 0.1);
             color: #00ff41;
-            font-size: 38px;
-            text-shadow: 0 0 40px rgba(0, 255, 65, 0.3);
-            margin-bottom: 10px;
-            transition: color 0.3s ease;
+            border: 1px solid rgba(0, 255, 65, 0.1);
         }
 
-        body.light-theme #startScreen h1 {
-            color: #0066cc;
-            text-shadow: 0 0 40px rgba(0, 102, 204, 0.3);
-        }
-
-        #startScreen p {
-            color: #808080;
-            font-size: 16px;
-            margin: 5px 0;
-        }
-
-        body.light-theme #startScreen p {
-            color: #555;
-        }
-
-        #startScreen .key {
-            color: #00ff41;
-            border: 1px solid #00ff41;
-            padding: 5px 15px;
-            border-radius: 6px;
-            font-size: 14px;
-            margin: 10px 0;
-            transition: all 0.3s ease;
-        }
-
-        body.light-theme #startScreen .key {
-            color: #0066cc;
-            border-color: #0066cc;
-        }
-
-        #gameOver {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: rgba(10, 10, 10, 0.9);
-            pointer-events: all;
-            cursor: pointer;
-            z-index: 20;
-            transition: background 0.3s ease;
-        }
-
-        body.light-theme #gameOver {
-            background: rgba(240, 240, 240, 0.95);
-        }
-
-        #gameOver h1 {
-            color: #ff4444;
-            font-size: 34px;
-            text-shadow: 0 0 40px rgba(255, 68, 68, 0.3);
-            margin-bottom: 5px;
-        }
-
-        body.light-theme #gameOver h1 {
-            color: #cc0000;
-        }
-
-        #gameOver .final-score {
-            color: #00ff41;
-            font-size: 24px;
-            margin: 10px 0;
-            transition: color 0.3s ease;
-        }
-
-        body.light-theme #gameOver .final-score {
-            color: #0066cc;
-        }
-
-        #gameOver p {
-            color: #808080;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        body.light-theme #gameOver p {
-            color: #555;
+        .badge-beta {
+            background: rgba(255, 170, 0, 0.1);
+            color: #ffaa00;
+            border: 1px solid rgba(255, 170, 0, 0.1);
         }
 
         .back-link {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #444;
-            font-size: 13px;
+            color: rgba(255, 255, 255, 0.08);
             text-decoration: none;
-            z-index: 30;
-            transition: all 0.3s ease;
-            background: rgba(10, 10, 10, 0.7);
-            padding: 8px 20px;
-            border-radius: 20px;
-            border: 1px solid #222;
-            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            transition: color 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
         }
+
         .back-link:hover {
-            color: #00ff41;
-            border-color: #00ff41;
-            background: rgba(0, 255, 65, 0.1);
-        }
-
-        body.light-theme .back-link {
-            background: rgba(240, 240, 240, 0.8);
-            border-color: #ccc;
-            color: #666;
-        }
-
-        body.light-theme .back-link:hover {
-            color: #0066cc;
-            border-color: #0066cc;
-            background: rgba(0, 102, 204, 0.1);
-        }
-
-        /* Theme toggle button inside game */
-        #themeToggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            border: 2px solid #00ff41;
-            background: #0a0a0a;
-            color: #00ff41;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #themeToggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 40px rgba(0, 255, 65, 0.3);
-            background: #00ff41;
-            color: #0a0a0a;
-        }
-
-        body.light-theme #themeToggle {
-            border-color: #0066cc;
-            background: #ffffff;
-            color: #0066cc;
-            box-shadow: 0 0 20px rgba(0, 102, 204, 0.1);
-        }
-
-        body.light-theme #themeToggle:hover {
-            background: #0066cc;
-            color: #ffffff;
-            box-shadow: 0 0 40px rgba(0, 102, 204, 0.3);
+            color: rgba(255, 255, 255, 0.3);
         }
 
         @media (max-width: 500px) {
-            #gameContainer {
-                width: 95vw;
-                height: 80vh;
-                border-radius: 8px;
+            .game-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
             }
-            #startScreen h1 { font-size: 28px; }
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .game-card {
+                padding: 24px 16px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div id="gameContainer">
-    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎮 Easter Eggs</h1>
+            <p>Pick a game to play</p>
+        </div>
 
-    <div id="score">0</div>
+        <!-- Game Grid -->
+        <div class="game-grid">
 
-    <div id="startScreen">
-        <h1>🐧 FLAPPY TUX</h1>
-        <p>⬆️ Space / Click / Tap to fly</p>
-        <div class="key">🐧 Tux the Penguin</div>
-        <p style="margin-top:20px;color:#444;font-size:12px;">Click or press Space to start</p>
+            <!-- Flappy Tux -->
+            <a href="/easteregg/flappy-tux/" class="game-card">
+                <span class="icon">🐧</span>
+                <h3>Flappy Tux</h3>
+                <p>Flappy Bird with the Linux penguin</p>
+                <span class="badge badge-ready">✅ Play</span>
+            </a>
+
+            <!-- Geometry Dash -->
+            <a href="/easteregg/geometry-dash/" class="game-card">
+                <span class="icon">⬛</span>
+                <h3>Geometry Dash</h3>
+                <p>Rhythm platformer with Tux</p>
+                <span class="badge badge-beta">⚡ Beta</span>
+            </a>
+
+        </div>
+
+        <!-- Back link -->
+        <a href="/" class="back-link">⬅ Back to site</a>
     </div>
-
-    <div id="gameOver">
-        <h1>💀 GAME OVER</h1>
-        <div class="final-score">Score: <span id="finalScore">0</span></div>
-        <p style="color:#00ff41;">Click or press Space to restart</p>
-    </div>
-
-    <a href="/" class="back-link">⬅️ Back to site</a>
-</div>
-
-<!-- Theme Switcher Button -->
-<button id="themeToggle" onclick="toggleGameTheme()">☀️</button>
-
-<script>
-    // ============================================
-    // THEME SWITCHER FOR GAME
-    // ============================================
-
-    function toggleGameTheme() {
-        const body = document.body;
-        const button = document.getElementById('themeToggle');
-
-        body.classList.toggle('light-theme');
-
-        if (body.classList.contains('light-theme')) {
-            button.textContent = '🌙';
-            button.style.borderColor = '#0066cc';
-            button.style.color = '#0066cc';
-            localStorage.setItem('gameTheme', 'light');
-        } else {
-            button.textContent = '☀️';
-            button.style.borderColor = '#00ff41';
-            button.style.color = '#00ff41';
-            localStorage.setItem('gameTheme', 'dark');
-        }
-    }
-
-    function loadGameTheme() {
-        const savedTheme = localStorage.getItem('gameTheme');
-        const body = document.body;
-        const button = document.getElementById('themeToggle');
-
-        if (savedTheme === 'light') {
-            body.classList.add('light-theme');
-            button.textContent = '🌙';
-            button.style.borderColor = '#0066cc';
-            button.style.color = '#0066cc';
-        } else {
-            button.textContent = '☀️';
-            button.style.borderColor = '#00ff41';
-            button.style.color = '#00ff41';
-        }
-    }
-
-    // ============================================
-    // FLAPPY TUX GAME
-    // ============================================
-
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    const scoreDisplay = document.getElementById('score');
-    const finalScoreDisplay = document.getElementById('finalScore');
-    const startScreen = document.getElementById('startScreen');
-    const gameOverScreen = document.getElementById('gameOver');
-
-    const GRAVITY = 0.45;
-    const JUMP_FORCE = -8;
-    const PIPE_WIDTH = 60;
-    const PIPE_GAP = 170;
-    const PIPE_SPEED = 2.5;
-    const PIPE_INTERVAL = 90;
-
-    let bird = { x: 60, y: 300, width: 32, height: 32, velocity: 0 };
-    let pipes = [];
-    let score = 0;
-    let gameRunning = false;
-    let gameStarted = false;
-    let frameCount = 0;
-
-    function drawTux(x, y, size) {
-        const s = size / 2;
-        ctx.fillStyle = '#1a1a1a';
-        ctx.beginPath();
-        ctx.ellipse(x, y + s * 0.1, s, s * 0.85, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#333';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        ctx.fillStyle = '#f0f0f0';
-        ctx.beginPath();
-        ctx.ellipse(x + s * 0.15, y + s * 0.2, s * 0.5, s * 0.6, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#1a1a1a';
-        ctx.beginPath();
-        ctx.arc(x, y - s * 0.35, s * 0.5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#f0f0f0';
-        ctx.beginPath();
-        ctx.ellipse(x + s * 0.1, y - s * 0.4, s * 0.3, s * 0.25, 0.1, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.ellipse(x - s * 0.1, y - s * 0.4, s * 0.3, s * 0.25, -0.1, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.arc(x + s * 0.1, y - s * 0.45, s * 0.15, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(x - s * 0.1, y - s * 0.45, s * 0.15, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#0a0a0a';
-        ctx.beginPath();
-        ctx.arc(x + s * 0.13, y - s * 0.43, s * 0.07, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(x - s * 0.07, y - s * 0.43, s * 0.07, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#ff8800';
-        ctx.beginPath();
-        ctx.moveTo(x + s * 0.25, y - s * 0.35);
-        ctx.lineTo(x + s * 0.5, y - s * 0.3);
-        ctx.lineTo(x + s * 0.25, y - s * 0.25);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(x - s * 0.25, y - s * 0.35);
-        ctx.lineTo(x - s * 0.5, y - s * 0.3);
-        ctx.lineTo(x - s * 0.25, y - s * 0.25);
-        ctx.fill();
-        ctx.fillStyle = '#ff8800';
-        ctx.fillRect(x - s * 0.3, y + s * 0.7, s * 0.25, s * 0.1);
-        ctx.fillRect(x + s * 0.05, y + s * 0.7, s * 0.25, s * 0.1);
-        ctx.fillRect(x - s * 0.35, y + s * 0.72, s * 0.35, s * 0.08);
-        ctx.fillRect(x, y + s * 0.72, s * 0.35, s * 0.08);
-        ctx.fillStyle = '#1a1a1a';
-        const wingAngle = Math.sin(Date.now() / 150) * 0.3;
-        ctx.save();
-        ctx.translate(x - s * 0.7, y + s * 0.1);
-        ctx.rotate(-0.3 + wingAngle);
-        ctx.beginPath();
-        ctx.ellipse(0, 0, s * 0.35, s * 0.15, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-        ctx.save();
-        ctx.translate(x + s * 0.7, y + s * 0.1);
-        ctx.rotate(0.3 - wingAngle);
-        ctx.beginPath();
-        ctx.ellipse(0, 0, s * 0.35, s * 0.15, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-    }
-
-    function drawPipe(x, topHeight) {
-        const bottomY = topHeight + PIPE_GAP;
-        ctx.fillStyle = '#00aa33';
-        ctx.fillRect(x, 0, PIPE_WIDTH, topHeight);
-        ctx.fillStyle = '#00cc44';
-        ctx.fillRect(x - 8, topHeight - 25, PIPE_WIDTH + 16, 25);
-        ctx.fillStyle = '#00aa33';
-        ctx.fillRect(x, bottomY, PIPE_WIDTH, 600 - bottomY);
-        ctx.fillStyle = '#00cc44';
-        ctx.fillRect(x - 8, bottomY, PIPE_WIDTH + 16, 25);
-        ctx.shadowColor = 'rgba(0, 255, 65, 0.05)';
-        ctx.shadowBlur = 10;
-        ctx.fillStyle = 'rgba(0, 255, 65, 0.03)';
-        ctx.fillRect(x, 0, PIPE_WIDTH, 600);
-        ctx.shadowBlur = 0;
-    }
-
-    function checkCollision() {
-        const bx = bird.x - 10;
-        const by = bird.y - 10;
-        const bSize = 20;
-        if (by + bSize > 570 || by < 0) return true;
-        for (let p of pipes) {
-            if (bx + bSize > p.x && bx < p.x + PIPE_WIDTH) {
-                if (by < p.topHeight || by + bSize > p.topHeight + PIPE_GAP) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    function resetGame() {
-        bird.y = 300;
-        bird.velocity = 0;
-        pipes = [];
-        score = 0;
-        frameCount = 0;
-        scoreDisplay.textContent = '0';
-        gameRunning = false;
-        gameStarted = false;
-        gameOverScreen.style.display = 'none';
-        startScreen.style.display = 'flex';
-    }
-
-    function startGame() {
-        resetGame();
-        gameStarted = true;
-        gameRunning = true;
-        startScreen.style.display = 'none';
-        gameOverScreen.style.display = 'none';
-        bird.y = 250;
-        bird.velocity = 0;
-    }
-
-    function endGame() {
-        gameRunning = false;
-        finalScoreDisplay.textContent = score;
-        gameOverScreen.style.display = 'flex';
-    }
-
-    function update() {
-        if (!gameRunning) return;
-        bird.velocity += GRAVITY;
-        bird.y += bird.velocity;
-        frameCount++;
-        if (frameCount % PIPE_INTERVAL === 0) {
-            const topHeight = Math.random() * (400 - PIPE_GAP - 50) + 50;
-            pipes.push({ x: 400, topHeight: topHeight });
-        }
-        for (let i = pipes.length - 1; i >= 0; i--) {
-            pipes[i].x -= PIPE_SPEED;
-            if (pipes[i].x + PIPE_WIDTH < 0) {
-                pipes.splice(i, 1);
-                score++;
-                scoreDisplay.textContent = score;
-            }
-        }
-        if (checkCollision()) {
-            endGame();
-        }
-    }
-
-    function draw() {
-        ctx.clearRect(0, 0, 400, 600);
-        ctx.strokeStyle = 'rgba(0, 255, 65, 0.03)';
-        ctx.lineWidth = 1;
-        for (let i = 0; i < 600; i += 40) {
-            ctx.beginPath();
-            ctx.moveTo(0, i);
-            ctx.lineTo(400, i);
-            ctx.stroke();
-        }
-        for (let i = 0; i < 400; i += 40) {
-            ctx.beginPath();
-            ctx.moveTo(i, 0);
-            ctx.lineTo(i, 600);
-            ctx.stroke();
-        }
-        for (let p of pipes) {
-            drawPipe(p.x, p.topHeight);
-        }
-        const rotation = Math.min(Math.max(bird.velocity * 0.04, -0.3), 0.5);
-        ctx.save();
-        ctx.translate(bird.x, bird.y);
-        ctx.rotate(rotation);
-        drawTux(0, 0, 36);
-        ctx.restore();
-        ctx.fillStyle = 'rgba(0, 255, 65, 0.15)';
-        ctx.fillRect(0, 575, 400, 25);
-        ctx.fillStyle = '#00ff41';
-        ctx.fillRect(0, 575, 400, 2);
-        if (gameRunning) {
-            ctx.strokeStyle = `rgba(0, 255, 65, ${0.1 + Math.sin(Date.now() / 1000) * 0.05})`;
-            ctx.lineWidth = 2;
-            ctx.strokeRect(0, 0, 400, 600);
-        }
-    }
-
-    function gameLoop() {
-        update();
-        draw();
-        requestAnimationFrame(gameLoop);
-    }
-
-    function handleJump(e) {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        if (!gameStarted) {
-            startGame();
-            return;
-        }
-        if (!gameRunning) {
-            resetGame();
-            startGame();
-            return;
-        }
-        bird.velocity = JUMP_FORCE;
-    }
-
-    document.addEventListener('keydown', function(e) {
-        if (e.code === 'Space' || e.key === ' ') {
-            e.preventDefault();
-            handleJump(e);
-        }
-    });
-
-    canvas.addEventListener('click', function(e) {
-        e.stopPropagation();
-        handleJump(e);
-    });
-
-    canvas.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        handleJump(e);
-    });
-
-    startScreen.addEventListener('click', function(e) {
-        e.stopPropagation();
-        handleJump(e);
-    });
-
-    gameOverScreen.addEventListener('click', function(e) {
-        e.stopPropagation();
-        handleJump(e);
-    });
-
-    document.querySelector('.back-link').addEventListener('click', function(e) {
-        e.stopPropagation();
-    });
-
-    // Load saved theme
-    loadGameTheme();
-    resetGame();
-    gameLoop();
-</script>
 
 </body>
 </html>

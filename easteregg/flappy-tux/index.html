@@ -9,6 +9,9 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none; /* ← Prevents text selection */
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
         body {
             background: #0a0a0a;
@@ -28,12 +31,15 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 0 60px rgba(0, 255, 65, 0.1);
+            cursor: pointer;
+            touch-action: none; /* ← Prevents touch scrolling */
         }
         #gameCanvas {
             display: block;
             width: 100%;
             height: 100%;
             cursor: pointer;
+            touch-action: none;
         }
         #score {
             position: absolute;
@@ -57,20 +63,22 @@
             justify-content: center;
             align-items: center;
             background: rgba(10, 10, 10, 0.85);
-            pointer-events: all;
-            cursor: pointer;
+            pointer-events: none; /* ← Let clicks pass through to canvas */
             z-index: 20;
+            cursor: pointer;
         }
         #startScreen h1 {
             color: #00ff41;
             font-size: 38px;
             text-shadow: 0 0 40px rgba(0, 255, 65, 0.3);
             margin-bottom: 10px;
+            pointer-events: none;
         }
         #startScreen p {
             color: #808080;
             font-size: 16px;
             margin: 5px 0;
+            pointer-events: none;
         }
         #startScreen .key {
             color: #00ff41;
@@ -79,6 +87,7 @@
             border-radius: 6px;
             font-size: 14px;
             margin: 10px 0;
+            pointer-events: none;
         }
         #gameOver {
             position: absolute;
@@ -91,25 +100,28 @@
             justify-content: center;
             align-items: center;
             background: rgba(10, 10, 10, 0.9);
-            pointer-events: all;
-            cursor: pointer;
+            pointer-events: none; /* ← Let clicks pass through to canvas */
             z-index: 20;
+            cursor: pointer;
         }
         #gameOver h1 {
             color: #ff4444;
             font-size: 34px;
             text-shadow: 0 0 40px rgba(255, 68, 68, 0.3);
             margin-bottom: 5px;
+            pointer-events: none;
         }
         #gameOver .final-score {
             color: #00ff41;
             font-size: 24px;
             margin: 10px 0;
+            pointer-events: none;
         }
         #gameOver p {
             color: #808080;
             font-size: 14px;
             margin-top: 10px;
+            pointer-events: none;
         }
         .back-link {
             position: absolute;
@@ -126,6 +138,7 @@
             border-radius: 20px;
             border: 1px solid #222;
             font-family: 'Courier New', monospace;
+            pointer-events: auto; /* ← Only this is clickable */
         }
         .back-link:hover {
             color: #00ff41;
@@ -162,6 +175,10 @@
 </div>
 
 <script>
+    // ============================================
+    // FLAPPY TUX GAME
+    // ============================================
+
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const scoreDisplay = document.getElementById('score');
@@ -270,4 +287,127 @@
         const bSize = 20;
         if (by + bSize > 570 || by < 0) return true;
         for (let p of pipes) {
-            if (bx + bSize > p
+            if (bx + bSize > p.x && bx < p.x + PIPE_WIDTH) {
+                if (by < p.topHeight || by + bSize > p.topHeight + PIPE_GAP) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function resetGame() {
+        bird.y = 300;
+        bird.velocity = 0;
+        pipes = [];
+        score = 0;
+        frameCount = 0;
+        scoreDisplay.textContent = '0';
+        gameRunning = false;
+        gameStarted = false;
+        gameOverScreen.style.display = 'none';
+        startScreen.style.display = 'flex';
+    }
+
+    function startGame() {
+        resetGame();
+        gameStarted = true;
+        gameRunning = true;
+        startScreen.style.display = 'none';
+        gameOverScreen.style.display = 'none';
+        bird.y = 250;
+        bird.velocity = 0;
+    }
+
+    function endGame() {
+        gameRunning = false;
+        finalScoreDisplay.textContent = score;
+        gameOverScreen.style.display = 'flex';
+    }
+
+    function update() {
+        if (!gameRunning) return;
+        bird.velocity += GRAVITY;
+        bird.y += bird.velocity;
+        frameCount++;
+        if (frameCount % PIPE_INTERVAL === 0) {
+            const topHeight = Math.random() * (400 - PIPE_GAP - 50) + 50;
+            pipes.push({ x: 400, topHeight: topHeight });
+        }
+        for (let i = pipes.length - 1; i >= 0; i--) {
+            pipes[i].x -= PIPE_SPEED;
+            if (pipes[i].x + PIPE_WIDTH < 0) {
+                pipes.splice(i, 1);
+                score++;
+                scoreDisplay.textContent = score;
+            }
+        }
+        if (checkCollision()) {
+            endGame();
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, 400, 600);
+        for (let p of pipes) {
+            drawPipe(p.x, p.topHeight);
+        }
+        const rotation = Math.min(Math.max(bird.velocity * 0.04, -0.3), 0.5);
+        ctx.save();
+        ctx.translate(bird.x, bird.y);
+        ctx.rotate(rotation);
+        drawTux(0, 0, 36);
+        ctx.restore();
+        ctx.fillStyle = 'rgba(0, 255, 65, 0.15)';
+        ctx.fillRect(0, 575, 400, 25);
+        ctx.fillStyle = '#00ff41';
+        ctx.fillRect(0, 575, 400, 2);
+    }
+
+    function gameLoop() {
+        update();
+        draw();
+        requestAnimationFrame(gameLoop);
+    }
+
+    function handleJump(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (!gameStarted) { startGame(); return; }
+        if (!gameRunning) { resetGame(); startGame(); return; }
+        bird.velocity = JUMP_FORCE;
+    }
+
+    // Keyboard
+    document.addEventListener('keydown', function(e) {
+        if (e.code === 'Space' || e.key === ' ') {
+            e.preventDefault();
+            handleJump(e);
+        }
+    });
+
+    // Canvas click
+    canvas.addEventListener('click', function(e) {
+        e.stopPropagation();
+        handleJump(e);
+    });
+
+    // Canvas touch (mobile)
+    canvas.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleJump(e);
+    });
+
+    // Click on the container (if someone clicks the background)
+    document.getElementById('gameContainer').addEventListener('click', function(e) {
+        // Ignore if the click was on the back link
+        if (e.target.classList && e.target.classList.contains('back-link')) return;
+        handleJump(e);
+    });
+
+    resetGame();
+    gameLoop();
+</script>
+
+</body>
+</html>

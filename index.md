@@ -128,7 +128,7 @@ layout: default
     <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
         <h2 style="color:#00ff41;font-size:1.6em;margin:0 0 10px 0;">🧑‍💻 About Me</h2>
         <p style="color:#c0c0c0;line-height:1.7;max-width:550px;margin:0 auto;">
-            I'm <strong style="color:#00ff41;">Keemop</strong>, a 12-year-old tech explorer. 
+            I'm <strong style="color:#00ff41;">Keemop</strong>, a tech explorer. 
             I built this site to share what I learn about Linux, coding, and computers. 
             If I can do it, so can you!
         </p>
